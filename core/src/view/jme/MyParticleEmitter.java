@@ -1004,7 +1004,7 @@ public class MyParticleEmitter extends ParticleEmitter {
         particles[idx2] = p1;
     }
 
-    private void updateParticle(Particle p, float tpf, Vector3f min, Vector3f max){
+    protected void updateParticle(Particle p, float tpf, Vector3f min, Vector3f max){
         // applying gravity
         p.velocity.x -= gravity.x * tpf;
         p.velocity.y -= gravity.y * tpf;
@@ -1014,7 +1014,7 @@ public class MyParticleEmitter extends ParticleEmitter {
 
         // affecting color, size and angle
         float b = (p.startlife - p.life) / p.startlife;
-        p.color.interpolate(startColor, endColor, b);
+        p.color.interpolateLocal(startColor, endColor, b);
         p.size = FastMath.interpolateLinear(b, startSize, endSize);
         p.angle += p.rotateSpeed * tpf;
 
@@ -1072,7 +1072,7 @@ public class MyParticleEmitter extends ParticleEmitter {
             if (p != null){
                 p.life -= tpf;
                 if(isInWorldSpace())
-                    p.position.interpolate(lastPos, 1-tpf/originalTPF);
+                    p.position.interpolateLocal(lastPos, 1-tpf/originalTPF);
                 if (p.life <= 0){
                     freeParticle(lastUsed);
                 }else{

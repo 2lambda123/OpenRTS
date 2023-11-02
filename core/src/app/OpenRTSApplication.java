@@ -12,6 +12,8 @@ import java.util.prefs.BackingStoreException;
 import network.client.ClientManager;
 
 import com.jme3.app.Application;
+import com.jme3.app.LegacyApplication;
+import com.jme3.app.SimpleApplication;
 import com.jme3.app.StatsView;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
@@ -32,7 +34,7 @@ import com.jme3.system.JmeContext.Type;
 import com.jme3.system.JmeSystem;
 import com.jme3.util.BufferUtils;
 
-public abstract class OpenRTSApplication extends Application implements PhysicsTickListener {
+public abstract class OpenRTSApplication extends LegacyApplication implements PhysicsTickListener {
 
 	private static final Logger logger = Logger.getLogger(OpenRTSApplication.class.getName());
 
@@ -123,7 +125,9 @@ public abstract class OpenRTSApplication extends Application implements PhysicsT
 		statsView.setLocalTranslation(0, fpsText.getLineHeight(), 0);
 		guiNode.attachChild(statsView);
 	}
-
+	
+	public abstract void simpleInitApp();
+	
 	@Override
 	public void initialize() {
 		bulletAppState = new BulletAppState();
@@ -193,8 +197,6 @@ public abstract class OpenRTSApplication extends Application implements PhysicsT
 		simpleRender(renderManager);
 		stateManager.postRender();
 	}
-
-	public abstract void simpleInitApp();
 
 	public void simpleUpdate(float tpf) {
 	}
